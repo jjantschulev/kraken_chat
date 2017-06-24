@@ -15,8 +15,7 @@ var epilepsy = false;
 var previous_message = '';
 
 function setup () {
-  socket = io(window.location.href.substring(0, window.location.href.length - 23) + "2222");
-  console.log(window.location.href.substring(0, window.location.href.length - 23) + "2222");
+  socket = io("jantschulev.ddns.net:10001");
 
   socket.emit('name', name)
 

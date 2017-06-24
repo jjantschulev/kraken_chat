@@ -1,9 +1,9 @@
 var express = require('express');
 var app = express();
-var server = app.listen(2222);
+var server = app.listen(10001);
 app.use(express.static('public'));
 
-console.log("Kraken Chat server is running on port: 2222");
+console.log("Kraken Chat server is running on port: 10001");
 
 var socket = require('socket.io');
 var io = socket(server);
@@ -19,7 +19,7 @@ var connectedUsers = '';
 var connectedNames = '';
 
 var chat = '';
-fs.readFile('public/kraken/kraken_chat_log.txt', function (err, data) {
+fs.readFile('kraken_chat_log.txt', function (err, data) {
   if (err) {
     console.log("error while reading file" + err);
   } else {
@@ -143,7 +143,7 @@ function ab2str(buf) {
 }
 
 function saveChat(chat){
-  fs.writeFile("public/kraken/kraken_chat_log.txt", chat, function(err) {
+  fs.writeFile("kraken_chat_log.txt", chat, function(err) {
     if(err) {
         return console.log(err);
     }
