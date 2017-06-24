@@ -1,0 +1,106 @@
+body {
+  background-color: black;
+}
+
+
+h1{
+  color: rgb(63, 255, 53);
+  text-align: center;
+  margin-top: 1vh;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: monospace;
+  font-size: 5vmin;
+}
+
+#chat_section {
+  width: 100%;
+  display: inline-block;
+
+}
+
+#draw_section {
+  width: 60%;
+  height: 100%;
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+#message {
+  outline: none;
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  background: black;
+  color: rgb(63, 255, 53);
+  border-style: solid;
+  height: 3vh;
+  width: 70%;
+  border: none;
+  border-bottom: solid 2px rgb(63, 255, 53);
+  text-align: left;
+  font-family: monospace;
+  font-size: 20px;
+}
+
+#chat {
+  font-size: 1.8vmin;
+  font-family: monospace;
+  color: rgb(63, 255, 53);
+  text-align: left;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15%;
+  padding-right: 15%;
+}
+
+#userCount {
+  font-size: 1.3vmin;
+  font-family: monospace;
+  color: rgb(255, 255, 0);
+  text-align: left;
+  position: fixed;
+  top: 1%;
+  left: 1%;
+}
+
+
+.name {
+  color: red;
+}
+.swear {
+  color: yellow;
+}
+
+.time {
+  color: rgb(0, 123, 255);
+}
+
+.pw_prompt {
+    color: white;
+    position:fixed;
+    left: 50%;
+    top: 6%;
+    margin-left:-100px;
+    padding:15px;
+    width:200px;
+}
+.pw_prompt label {
+    color: rgb(63, 255, 53);
+    display:block;
+    margin-bottom:5px;
+}
+.pw_prompt input {
+    outline: none;
+    height: 2vh;
+    color: rgb(63, 255, 53);
+    margin-bottom:10px;
+    background-color: black;
+    border: none;
+    border-bottom: solid 2px rgb(63, 255, 53);
+    font-family: monospace;
+}
