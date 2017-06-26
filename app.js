@@ -150,3 +150,30 @@ function saveChat(chat){
     console.log("The file was saved!");
   });
 }
+
+
+
+
+// KRAKEN _ BOT
+
+
+function kraken_response(output) {
+  console.log(output);
+}
+
+function calculate_response(input) {
+  var spawn = require('child_process').spawn,
+      py    = spawn('python', ['compute_response.py']),
+      data = input,
+      dataString = '';
+
+  py.stdout.on('data', function(data){
+    dataString = data.toString();
+  });
+  py.stdout.on('end', function(){
+    kraken_response(dataString);
+  });
+  py.stdin.write(JSON.stringify(data));
+  py.stdin.end();
+
+}
