@@ -15,8 +15,8 @@ var epilepsy = false;
 var previous_message = '';
 
 function setup () {
-  socket = io("localhost:10001");
-  // socket = io("jantschulev.ddns.net:10001");
+  // socket = io("localhost:10001");
+  socket = io("jantschulev.ddns.net:10001");
 
   socket.emit('name', name)
 

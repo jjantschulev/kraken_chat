@@ -84,7 +84,7 @@ io.sockets.on('connection',
         //Do code here
         console.log("@kraken ----> "+dataString);
         var time = "".concat("<span style=\"color:rgb(0, 123, 255)\"> @", formatAMPM(), "</span>: ");
-        var user = "<span style=\"color:rgb(0,255,255)\">  @kraken  </span>"
+        var user = "<span style=\"color:rgb(0,255,255)\"> @kraken </span>"
         var message = "".concat(dataString, "<br><br>");
         var result = "".concat(user, time, message);
         chat = result + chat;
