@@ -13,7 +13,7 @@ var fs = require('fs')
 var names = [];
 var number_of_users = 0;
 
-var password = 'kraken'
+var password = '@kraken333'
 
 var connectedUsers = '';
 var connectedNames = '';
@@ -56,7 +56,7 @@ io.sockets.on('connection',
     socket.on('chat',
       function (data) {
         for (i = 0; i < kickedUsers.length; i++){
-          if(data.n.toLowerCase()==kickedUsers[i]){
+          if(data.n==kickedUsers[i]){
             io.to(socket.id).emit('chat', "You have been kicked from the chat. Your message was not sent<br>");
             return
           }
@@ -68,6 +68,37 @@ io.sockets.on('connection',
       }
     );
 
+
+// kraken_bot
+
+    socket.on('kraken_bot', function (input) {
+      var spawn = require('child_process').spawn,
+          py    = spawn('python', ['compute_response.py']),
+          data = input,
+          dataString = '';
+
+      py.stdout.on('data', function(data){
+        dataString = data.toString();
+      });
+      py.stdout.on('end', function(){
+        //Do code here
+        console.log("@kraken ----> "+dataString);
+        var time = "".concat("<span style=\"color:rgb(0, 123, 255)\"> @", formatAMPM(), "</span>: ");
+        var user = "<span style=\"color:rgb(0,255,255)\">  @kraken  </span>"
+        var message = "".concat(dataString, "<br><br>");
+        var result = "".concat(user, time, message);
+        chat = result + chat;
+        socket.broadcast.emit('chat', result);
+        io.to(socket.id).emit('chat', result);
+        saveChat(chat)
+      });
+      py.stdin.write(JSON.stringify(data));
+      py.stdin.end();
+    });
+
+
+// End kraken_bot
+
     socket.on('epilepsy', function (newEp) {
       socket.broadcast.emit('epilepsy', newEp);
     });
@@ -78,6 +109,7 @@ io.sockets.on('connection',
         socket.broadcast.emit('name', chat);
         io.to(socket.id).emit('name', chat);
       }else{
+        socket.broadcast.emit('authenticationFailed');
         io.to(socket.id).emit('authenticationFailed');
       }
     });
@@ -92,6 +124,7 @@ io.sockets.on('connection',
         console.log(information.mode + " \n" + information.confirm);
         io.to(socket.id).emit('passwordConfirmation', information);
       }else{
+        socket.broadcast.emit('authenticationFailed');
         io.to(socket.id).emit('authenticationFailed');
       }
     });
@@ -112,6 +145,7 @@ io.sockets.on('connection',
           }
         }
       }else{
+        socket.broadcast.emit('authenticationFailed');
         io.to(socket.id).emit('authenticationFailed');
       }
     });
@@ -152,28 +186,14 @@ function saveChat(chat){
 }
 
 
-
-
-// KRAKEN _ BOT
-
-
-function kraken_response(output) {
-  console.log(output);
-}
-
-function calculate_response(input) {
-  var spawn = require('child_process').spawn,
-      py    = spawn('python', ['compute_response.py']),
-      data = input,
-      dataString = '';
-
-  py.stdout.on('data', function(data){
-    dataString = data.toString();
-  });
-  py.stdout.on('end', function(){
-    kraken_response(dataString);
-  });
-  py.stdin.write(JSON.stringify(data));
-  py.stdin.end();
-
+function formatAMPM() {
+  var date = new Date();
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? 'pm' : 'am';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? '0'+minutes : minutes;
+  var strTime = hours + ':' + minutes + ampm;
+  return strTime;
 }

@@ -15,7 +15,7 @@ var epilepsy = false;
 var previous_message = '';
 
 function setup () {
-  socket = io("10.173.232.222:10001");
+  socket = io("localhost:10001");
   // socket = io("jantschulev.ddns.net:10001");
 
   socket.emit('name', name)
@@ -100,8 +100,10 @@ function keyPressed (){
     sendMessage(message.value);
   }else if(keyCode == UP_ARROW){
     message.value = previous_message;
-  }else if (keyCode == DOWN_ARROW) {
-    message.value = "";
+  }else if (keyCode==SHIFT && key.toLowerCase() == "k") {
+    console.log("kpresed");
+    message.value = "@k "+ message.value;
+    sendMessage(message.value);
   }
 }
 
@@ -214,7 +216,7 @@ function sendMessage(value) {
     }
 
     if(m == "!help"){
-      m = "<br><br> Help: <br> <table><li>!clear</li><li>!change name [new name]</li><li>!help</li><li>!kick [user]</li><li>!restore [user]</li><li>!epilepsy</li></table>"
+      m = "<br><br> Help: <br> <table><li>@kraken --- talk to kraken bot</li><li>!clear</li><li>!change name [new name]</li><li>!help</li><li>!kick [user]</li><li>!restore [user]</li><li>!epilepsy</li></table>"
       // m = "Help: <br> !clear ------------------- clears the chat, requires admin password <br> !change name [new name] -- changes name.<br> !help -------------------- bring up this help manual <br> !kick [user] ------------- kicks user off the chat, Requires Admin Password <br> !restore [user] ---------- restore kicked user. Requires Admin Password <br> !epilepsy ---------------- toggle epilepsy mode";
     }
 
@@ -226,9 +228,18 @@ function sendMessage(value) {
       }
       socket.emit('epilepsy', epilepsy);
     }
+
+
   }
 
-
+  if(m.indexOf("@kraken ") == 0){
+    var bot_message = m.substring(8)
+    socket.emit('kraken_bot', bot_message);
+  }
+  if(m.indexOf("@k ") == 0){
+    var bot_message = m.substring(3)
+    socket.emit('kraken_bot', bot_message);
+  }
 
   if(m.length >0){
     previous_message = message.value;
