@@ -12,8 +12,8 @@ var epilepsy = false;
 var previous_message = '';
 
 // socket = io("10.173.232.222:3001");
-// socket = io("jantschulev.ddns.net:3001");
-socket = io("localhost:3001");
+socket = io("jantschulev.ddns.net:3001");
+// socket = io("localhost:3001");
 
 socket.emit('name', name)
 
