@@ -12,6 +12,9 @@ if(window.location.href.substring(window.location.href.length-3) == "?=w"){
   document.getElementById('message').style.color = "black"
   document.getElementById('chat').style.color = "black"
   document.getElementById('chat').style.color = "black"
+  document.getElementById('title').style.color = "black"
+  document.getElementById('title').style.color = "black"
+  document.getElementById('userCount').style.color = "black"
 }
 
 var chat;
