@@ -79,28 +79,3 @@ h1{
 .time {
   color: rgb(0, 123, 255);
 }
-
-.pw_prompt {
-    color: white;
-    position:fixed;
-    left: 50%;
-    top: 6%;
-    margin-left:-100px;
-    padding:15px;
-    width:200px;
-}
-.pw_prompt label {
-    color: rgb(63, 255, 53);
-    display:block;
-    margin-bottom:5px;
-}
-.pw_prompt input {
-    outline: none;
-    height: 2vh;
-    color: rgb(63, 255, 53);
-    margin-bottom:10px;
-    background-color: black;
-    border: none;
-    border-bottom: solid 2px rgb(63, 255, 53);
-    font-family: monospace;
-}

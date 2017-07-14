@@ -5,6 +5,14 @@ if(name == "undefined"){
   Cookies.set('name', name, { expires: 365});
 }
 
+console.log(window.location.href.substring(window.location.href.length-3));
+if(window.location.href.substring(window.location.href.length-3) == "?=w"){
+  document.body.style.backgroundColor = "rgb(245,245,245)"
+  document.getElementById('message').style.backgroundColor = "rgb(245,245,245)"
+  document.getElementById('message').style.color = "black"
+  document.getElementById('chat').style.color = "black"
+  document.getElementById('chat').style.color = "black"
+}
 
 var chat;
 var message;
