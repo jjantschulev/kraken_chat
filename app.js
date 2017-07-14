@@ -1,9 +1,11 @@
+const PORT = 3001
+
 var express = require('express');
 var app = express();
-var server = app.listen(10001);
+var server = app.listen(PORT);
 app.use(express.static('public'));
 
-console.log("Kraken Chat server is running on port: 10001");
+console.log("Kraken Chat server is running on port: "+PORT);
 
 var socket = require('socket.io');
 var io = socket(server);
@@ -33,15 +35,12 @@ var kickedUsers = [];
 
 io.sockets.on('connection',
   function(socket){
-    console.log("New user connected: " + number_of_users + " online users.");
 
 
     socket.on('name',
       function(name){
         number_of_users++;
         names.push(name);
-        console.log(names);
-        console.log('');
 
         connectedUsers = ''.concat('Connected users: ', number_of_users, '<br>', '<br>');
         connectedNames = ''.concat(name, '<br>', connectedNames);
@@ -68,41 +67,6 @@ io.sockets.on('connection',
       }
     );
 
-
-// kraken_bot
-
-    socket.on('kraken_bot', function (input) {
-      var spawn = require('child_process').spawn,
-          py    = spawn('python', ['compute_response.py']),
-          data = input,
-          dataString = '';
-
-      py.stdout.on('data', function(data){
-        dataString = data.toString();
-      });
-      py.stdout.on('end', function(){
-        //Do code here
-        console.log("@kraken ----> "+dataString);
-        var time = "".concat("<span style=\"color:rgb(0, 123, 255)\"> @", formatAMPM(), "</span>: ");
-        var user = "<span style=\"color:rgb(0,255,255)\"> @kraken </span>"
-        var message = "".concat(dataString, "<br><br>");
-        var result = "".concat(user, time, message);
-        chat = result + chat;
-        socket.broadcast.emit('chat', result);
-        io.to(socket.id).emit('chat', result);
-        saveChat(chat)
-      });
-      py.stdin.write(JSON.stringify(data));
-      py.stdin.end();
-    });
-
-
-// End kraken_bot
-
-    socket.on('epilepsy', function (newEp) {
-      socket.broadcast.emit('epilepsy', newEp);
-    });
-
     socket.on('clear', function(p){
       if(p == password){
         chat='';
@@ -116,12 +80,10 @@ io.sockets.on('connection',
 
     socket.on('requirePassword', function (data) {
       if(data.p == password){
-        console.log('Password match');
         information = {
           mode: data.mode,
           confirm: true
         }
-        console.log(information.mode + " \n" + information.confirm);
         io.to(socket.id).emit('passwordConfirmation', information);
       }else{
         socket.broadcast.emit('authenticationFailed');
@@ -159,10 +121,6 @@ io.sockets.on('connection',
         connectedNames = '';
 
         socket.broadcast.emit('sendName');
-
-        console.log("Users Connected: " + number_of_users);
-        console.log(names);
-        console.log('');
       }
     );
 
@@ -181,7 +139,6 @@ function saveChat(chat){
     if(err) {
         return console.log(err);
     }
-    console.log("The file was saved!");
   });
 }
 
